@@ -1,51 +1,31 @@
 import java.text.NumberFormat;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        int principal = (int) readNumber("Principal:", 1000, 1_000_000);
+        double annualInterest = readNumber("Annual Interest Rate:", 1, 30);
+        double years = (int) readNumber("Period (Years):", 1, 30);
+
+            double mortgage = calculateMortgage(principal,annualInterest ,(int) years);
+            String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+
+                System.out.println("Mortgage: " + mortgageFormatted);
+    }
+
+    public static double readNumber(String prompt, double min, double max ) {
         Scanner scanner = new Scanner(System.in);
-
-        int principal;
-        int years;
-        float annualInterest;
-        double mortgage;
-
+        double value;
         while (true) {
-            System.out.print("Principal ($1k - $1M):");
-            principal = scanner.nextInt();
+            System.out.print(prompt);
+            value = scanner.nextDouble();
 
-            if (principal < 1000 || principal > 1_000_000) {
-                System.out.println("You need to enter a value between $1k and $1M");
+            if (value < min || value > max) {
+                System.out.println("You need to enter a value between " + min + " and " + max);
                 continue;
             } break;
         }
-
-        while (true) {
-            System.out.print("Rate:");
-                annualInterest = scanner.nextFloat();
-
-            if (annualInterest < 1 || annualInterest > 30) {
-                System.out.println("You need to enter a value greater than 0 and less than or equals to 30");
-                continue;
-            } break;
-        }
-
-        while (true) {
-            System.out.print("Period (Years):");
-            years = scanner.nextInt();
-
-            if (years < 1 || years > 30){
-                System.out.println("You need to enter a value greater than 0 and less than 30");
-                continue;
-            } break;
-        }
-
-        mortgage = calculateMortgage(principal,annualInterest ,years);
-        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
-
-        System.out.println("Mortgage: " + mortgageFormatted);
+        return value;
     }
 
     public static double calculateMortgage(int principal, double annualInterest, int years) {
