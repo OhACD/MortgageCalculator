@@ -2,15 +2,30 @@ import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Main {
+    final static byte PERCENT = 100;
+    final static byte MONTHS_IN_YEAR = 12;
+
     public static void main(String[] args) {
         int principal = (int) readNumber("Principal:", 1000, 1_000_000);
-        double annualInterest = readNumber("Annual Interest Rate:", 1, 30);
-        double years = (int) readNumber("Period (Years):", 1, 30);
+        float annualInterest = (float) readNumber("Annual Interest Rate:", 1, 30);
+        byte years = (byte) readNumber("Period (Years):", 1, 30);
 
-            double mortgage = calculateMortgage(principal,annualInterest ,(int) years);
-            String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+        double mortgage = calculateMortgage(principal, annualInterest, years);
+        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+        System.out.println();
+        System.out.println("MORTGAGE");
+        System.out.println("--------");
+        System.out.println("Monthly Payments: " + mortgageFormatted);
 
-                System.out.println("Mortgage: " + mortgageFormatted);
+        System.out.println();
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("----------------");
+
+        for (short month = 1; month <= years * MONTHS_IN_YEAR; month++) {
+            double balance = calculateBalance(principal, annualInterest, years, month);
+            String balanceFormatted = NumberFormat.getCurrencyInstance().format(balance);
+            System.out.println(balanceFormatted);
+        }
     }
 
     public static double readNumber(String prompt, double min, double max ) {
@@ -28,16 +43,23 @@ public class Main {
         return value;
     }
 
+    public static double calculateBalance(int principal, double annualInterest, int years, short numberOfPaymentsMade) {
+        float numberOfPayments = years * MONTHS_IN_YEAR;
+        float monthlyInterest = (float) (annualInterest / PERCENT / MONTHS_IN_YEAR);
+
+        return (principal * (Math.pow((1 + monthlyInterest), numberOfPayments)
+                        - Math.pow((1 + monthlyInterest), numberOfPaymentsMade))
+                        / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1));
+    }
+
     public static double calculateMortgage(int principal, double annualInterest, int years) {
 
-        final int PERCENT = 100;
-        final int MONTHS_IN_YEAR = 12;
         int numberOfPayments = years * MONTHS_IN_YEAR;
         float monthlyInterest = (float) (annualInterest / PERCENT / MONTHS_IN_YEAR);
 
-        double mortgage = principal * // Dont Multiply by period you goose
+        // Dont Multiply by period you goose
+        return principal * // Dont Multiply by period you goose
                 (monthlyInterest * Math.pow(monthlyInterest + 1, numberOfPayments)) /
                 (Math.pow(monthlyInterest + 1, numberOfPayments) - 1);
-        return mortgage;
     }
 }
