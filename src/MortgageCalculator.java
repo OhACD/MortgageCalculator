@@ -1,6 +1,6 @@
 public class MortgageCalculator {
-    final static byte PERCENT = 100;
-    final static byte MONTHS_IN_YEAR = 12;
+    private final byte PERCENT = 100;
+    private final byte MONTHS_IN_YEAR = 12;
 
     private int principal;
     private double annualInterest;
@@ -10,6 +10,10 @@ public class MortgageCalculator {
         this.principal = principal;
         this.annualInterest = annualInterest;
         this.years = years;
+    }
+        //Overloaded Method to be used if one of the declared variables is needed
+    public MortgageCalculator() {
+
     }
 
     public double calculateBalance(short numberOfPaymentsMade) {
@@ -25,12 +29,15 @@ public class MortgageCalculator {
         int numberOfPayments = years * MONTHS_IN_YEAR;
         float monthlyInterest = (float) (annualInterest / PERCENT / MONTHS_IN_YEAR);
 
-        return principal * // Dont Multiply by period you goose
+        return principal * // Don't Multiply by period you goose
                 (monthlyInterest * Math.pow(monthlyInterest + 1, numberOfPayments)) /
                 (Math.pow(monthlyInterest + 1, numberOfPayments) - 1);
     }
 
     public int getYears() {
         return years;
+    }
+    public int getMonthsInAYear() {
+        return MONTHS_IN_YEAR;
     }
 }
