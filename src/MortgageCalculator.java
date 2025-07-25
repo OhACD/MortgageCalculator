@@ -3,18 +3,14 @@ import java.text.NumberFormat;
 public class MortgageCalculator {
     private final byte MONTHS_IN_YEAR = 12;
 
-    private int principal;
-    private double annualInterest;
-    private int years;
+    private final int principal;
+    private final double annualInterest;
+    private final int years;
 
     public MortgageCalculator(int principal, double annualInterest, int years) {
         this.principal = principal;
         this.annualInterest = annualInterest;
         this.years = years;
-    }
-        //Overloaded Method to be used if one of the declared variables is needed
-    public MortgageCalculator() {
-
     }
 
     public double calculateBalance(short numberOfPaymentsMade) {
@@ -50,12 +46,5 @@ public class MortgageCalculator {
 
     private int getNumberOfPayments() {
         return years * MONTHS_IN_YEAR;
-    }
-
-    public int getYears() {
-        return years;
-    }
-    public int getMonthsInAYear() {
-        return MONTHS_IN_YEAR;
     }
 }
