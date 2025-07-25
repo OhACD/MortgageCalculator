@@ -33,7 +33,7 @@ public class MortgageCalculator {
     }
 
     public void getPaymentSchedule() {
-        for (short month = 1; month <= years * MONTHS_IN_YEAR; month++) {
+        for (short month = 1; month <= getNumberOfPayments(); month++) {
             double balance = calculateBalance(month);
             System.out.println("After month " + month + ": " + NumberFormat.getCurrencyInstance().format(balance));
         }
