@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ReadNumber {
+public class Consol {
     public static double readNumber(String prompt, double min, double max ) {
         Scanner scanner = new Scanner(System.in);
         double value;
