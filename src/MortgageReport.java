@@ -21,10 +21,7 @@ public class MortgageReport {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
-        for (short month = 1; month <= calculator.getYears() * calculator.getMonthsInAYear(); month++) {
-            double balance = calculator.calculateBalance(month);
-            String balanceFormatted = NumberFormat.getCurrencyInstance().format(balance);
-            System.out.println(balanceFormatted);
-        }
+        calculator.getPaymentSchedule();
     }
 }
+
